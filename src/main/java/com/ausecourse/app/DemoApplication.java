@@ -1,4 +1,4 @@
-package com.ausecourse.demo;
+package com.ausecourse.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
