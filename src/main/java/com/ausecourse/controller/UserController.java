@@ -1,5 +1,9 @@
 package com.ausecourse.controller;
 
-public class UserController {
+import com.ausecourse.dao.UserDao;
 
+public class UserController {
+//routes
+	UserDao uDao;
+	
 }
