@@ -16,15 +16,13 @@ import com.ausecourse.model.User;
 @RestController
 public class UserController {
 //routes
-	//IUserDao udao;
-	UserDaoImpl uDao = new UserDaoImpl(); // to check
-	
-	@CrossOrigin()
+	@Autowired
+	IUserDao udao;	
 	@RequestMapping(value = "/UserGetById", method = RequestMethod.GET)
 	
 	public Optional<User> UserGetById(@RequestParam("id") String id) {
 		try {
-			return uDao.getById(id);
+			return udao.getById(id);
 		}catch(Exception e){
 			System.out.println(" msg: "+e.getMessage()+" local "+e.getLocalizedMessage()+" stacktrave"+e.getStackTrace());
 		}
