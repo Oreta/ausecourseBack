@@ -14,10 +14,4 @@ import com.ausecourse.model.User;
 public class UserController {
 //routes
 	IUserDao uDao;
-	
-	@CrossOrigin()
-	@RequestMapping(value = "/UserGetById", method = RequestMethod.GET)
-	public Optional<User> UserGetById(String id) {
-		return uDao.getById(id);
-	}
 }
