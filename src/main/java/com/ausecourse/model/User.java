@@ -15,6 +15,11 @@ public class User {
 		return id;
 	}
 
+	public User(int id) {
+		super();
+		this.id = id;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

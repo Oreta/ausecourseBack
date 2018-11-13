@@ -13,7 +13,19 @@ public class UserDaoImpl implements IUserDao{
 	
 	@Override
 	public Optional<User> getById(String id) {
-		return userRepository.findById(id);
+		try {
+			return userRepository.findById(id);
+		}catch(Exception e){
+			System.out.println(" msg: "+e.getMessage()+" local "+e.getLocalizedMessage()+" stacktrave"+e.getStackTrace());
+		}
+		
+		return null;
+	}
+	
+	public User user(int id) {
+		
+		
+		return new User(1);
 	}
 
 }
