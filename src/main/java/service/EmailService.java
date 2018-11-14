@@ -21,7 +21,7 @@ public class EmailService {
 	// CARE whithout proxy
 	public void sendMail(String toName, String toMail,String subject, String text) {
 		Email email = EmailBuilder.startingBlank().from("Ludovic Ouvry", "ausecourse@gmail.com")
-				.to(toName, toMail).withSubject(toMail).withPlainText(text).buildEmail();
+				.to(toName, toMail).withSubject(subject).withPlainText(text).buildEmail();
 		mailerBuilder.sendMail(email);
 	}
 }
