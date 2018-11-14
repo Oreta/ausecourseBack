@@ -43,5 +43,17 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value = "/UserDelete", method = RequestMethod.DELETE)
+	public void userDelete(@RequestParam String  id) {
+		udao.delete(id);
+		
+	}
+	
+	@RequestMapping(value = "/UserUpdate", method = RequestMethod.PUT)
+	public void userUpdate(@RequestBody User user) {
+		udao.update(user);
+		
+	}
+	
 	
 }

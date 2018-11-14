@@ -8,4 +8,7 @@ public interface IUserDao {
 public Optional<User> getById(String id);
 public void push(User user);
 public void emailValide(String id);
+public void delete(String id);
+public void update(User user);
+
 }

@@ -37,4 +37,18 @@ public class UserDaoImpl implements IUserDao{
 		System.out.println(userRepository.findById(id));
 	}
 
+
+	@Override
+	public void delete(String id) {
+		userRepository.deleteById(id);
+		
+	}
+
+
+	@Override
+	public void update(User user) {
+		userRepository.save(user);
+		
+	}
+
 }
