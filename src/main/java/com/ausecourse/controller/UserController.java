@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +25,16 @@ public class UserController {
 		try {
 			return udao.getById(id);
 		}catch(Exception e){
+			System.out.println("errreur");
 			System.out.println(" msg: "+e.getMessage()+" local "+e.getLocalizedMessage()+" stacktrave"+e.getStackTrace());
 		}
 		return null;
 		
+	}
+	
+	@RequestMapping(value = "/UserPost", method = RequestMethod.POST)
+	public void UserPush(@RequestBody User user) {
+		System.out.println("post user");
+		udao.push(user);
 	}
 }

@@ -29,7 +29,16 @@ public class UserDaoImpl implements IUserDao{
 	public User user(int id) {
 		
 		
-		return new User(1);
+		return new User("1");
+	}
+
+	@Override
+	public void push(User user) {
+		System.out.println("user try push");
+		userRepository.save(user);
+		
+		System.out.println("eoooe"+userRepository.findById(user.getId()+""));
+		
 	}
 
 }
