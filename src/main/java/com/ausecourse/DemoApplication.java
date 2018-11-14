@@ -10,7 +10,7 @@ import service.EmailService;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		new EmailService().sendMail("aa", "ludovic.ouvry@univ-lille.fr", "imp", "text");
+		new EmailService().sendMail("aa", "dilido@hotmail.fr.fr", "imp", "text");
 		//SpringApplication.run(DemoApplication.class, args);
 	}
 }
