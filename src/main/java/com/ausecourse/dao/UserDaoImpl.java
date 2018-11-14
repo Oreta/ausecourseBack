@@ -21,11 +21,6 @@ public class UserDaoImpl implements IUserDao{
 			return userRepository.findById(id);
 	}
 
-	public User user(int id) {
-		
-		
-		return new User("1");
-	}
 
 	@Override
 	public void push(User user) {
