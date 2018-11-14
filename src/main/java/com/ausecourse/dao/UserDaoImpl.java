@@ -28,4 +28,13 @@ public class UserDaoImpl implements IUserDao{
 		
 	}
 
+
+	@Override
+	public void emailValide(String id) {
+		User user =userRepository.findById(id).get();
+		user.setEmailValide(true);
+		userRepository.save(user);
+		System.out.println(userRepository.findById(id));
+	}
+
 }
