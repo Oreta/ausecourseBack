@@ -35,4 +35,12 @@ public class UserController {
 	public void UserPush(@RequestBody User user) {
 		udao.push(user);
 	}
+	
+	
+	@RequestMapping(value = "/UserEmailvalide", method = RequestMethod.PUT)
+	public void UserEmail(@RequestParam String  id) {
+		udao.emailValide(id);
+	}
+	
+	
 }
