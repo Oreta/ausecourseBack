@@ -17,15 +17,10 @@ public class UserDaoImpl implements IUserDao{
 	
 	@Override
 	public Optional<User> getById(String id) {
-		try {
+
 			return userRepository.findById(id);
-		}catch(Exception e){
-			System.out.println(" msg: "+e.getMessage()+" local "+e.getLocalizedMessage()+" stacktrave"+e.getStackTrace());
-		}
-		
-		return null;
 	}
-	
+
 	public User user(int id) {
 		
 		
@@ -34,10 +29,7 @@ public class UserDaoImpl implements IUserDao{
 
 	@Override
 	public void push(User user) {
-		System.out.println("user try push");
 		userRepository.save(user);
-		
-		System.out.println("eoooe"+userRepository.findById(user.getId()+""));
 		
 	}
 

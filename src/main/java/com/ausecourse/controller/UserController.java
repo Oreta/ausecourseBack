@@ -25,8 +25,7 @@ public class UserController {
 		try {
 			return udao.getById(id);
 		}catch(Exception e){
-			System.out.println("errreur");
-			System.out.println(" msg: "+e.getMessage()+" local "+e.getLocalizedMessage()+" stacktrave"+e.getStackTrace());
+		
 		}
 		return null;
 		
@@ -34,7 +33,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/UserPost", method = RequestMethod.POST)
 	public void UserPush(@RequestBody User user) {
-		System.out.println("post user");
 		udao.push(user);
 	}
 }
