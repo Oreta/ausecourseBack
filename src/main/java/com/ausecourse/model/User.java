@@ -15,7 +15,6 @@ public class User {
 	private String Road;
 	private String city;
 	private String country; // tout en maj
-	private boolean emailValide;
 	public User() {
 		super();
 	}
@@ -105,16 +104,8 @@ public class User {
 		this.country = country;
 	}
 
-	public boolean isEmailValide() {
-		return emailValide;
-	}
-
-	public void setEmailValide(boolean emailValide) {
-		this.emailValide = emailValide;
-	}
-
 	public User(String id, String name, String nickname, String email, int tel, int numeroRoad, String road, String city,
-			String country, boolean emailValide) {
+			String country) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -125,7 +116,6 @@ public class User {
 		Road = road;
 		this.city = city;
 		this.country = country;
-		this.emailValide = emailValide;
 	}
 
 	@Override
