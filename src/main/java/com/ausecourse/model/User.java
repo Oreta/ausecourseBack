@@ -5,6 +5,33 @@ import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("User")
 public class User {
+	public User(String id) {
+		super();
+		this.id = id;
+	}
+	public User(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	public User() {
+		super();
+	}
+	public User(String id, String name, String nickname, String email, int tel, int numeroRoad, String road,
+			String city, String country, boolean emailValide, boolean isActive) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.nickname = nickname;
+		this.email = email;
+		this.tel = tel;
+		this.numeroRoad = numeroRoad;
+		Road = road;
+		this.city = city;
+		this.country = country;
+		this.emailValide = emailValide;
+		this.isActive = isActive;
+	}
 	@Id
 	private String id;
 	private String name;
@@ -16,9 +43,7 @@ public class User {
 	private String city;
 	private String country; // tout en maj
 	private boolean emailValide;
-	public boolean isEmailValide() {
-		return emailValide;
-	}
+	private boolean isActive;
 	public String getId() {
 		return id;
 	}
@@ -73,35 +98,22 @@ public class User {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	public boolean isEmailValide() {
+		return emailValide;
+	}
 	public void setEmailValide(boolean emailValide) {
 		this.emailValide = emailValide;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", nickname=" + nickname + ", email=" + email + ", tel=" + tel
 				+ ", numeroRoad=" + numeroRoad + ", Road=" + Road + ", city=" + city + ", country=" + country
-				+ ", emailValide=" + emailValide + "]";
-	}
-	public User() {
-		super();
-	}
-	public User(String id, String name, String nickname, String email, int tel, int numeroRoad, String road,
-			String city, String country, boolean emailValide) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.nickname = nickname;
-		this.email = email;
-		this.tel = tel;
-		this.numeroRoad = numeroRoad;
-		Road = road;
-		this.city = city;
-		this.country = country;
-		this.emailValide = emailValide;
-	}
-	public User(String id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
+				+ ", emailValide=" + emailValide + ", isActive=" + isActive + "]";
 	}
 }

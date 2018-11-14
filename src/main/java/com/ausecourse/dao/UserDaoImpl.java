@@ -40,7 +40,9 @@ public class UserDaoImpl implements IUserDao{
 
 	@Override
 	public void delete(String id) {
-		userRepository.deleteById(id);
+		User user = userRepository.findById(id).get();
+		user.setActive(false);
+		userRepository.save(user);
 		
 	}
 
