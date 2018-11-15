@@ -20,7 +20,7 @@ public class UserController {
 	@Autowired
 	IUserDao udao;	
 	@RequestMapping(value = "/UserGetById", method = RequestMethod.GET)
-	
+	@CrossOrigin()
 	public Optional<User> UserGetById(@RequestParam("id") String id) {
 		try {
 			return udao.getById(id);
