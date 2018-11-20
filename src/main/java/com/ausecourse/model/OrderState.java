@@ -4,6 +4,7 @@ public enum OrderState {
 	CREATE,
 	INPROGRESS,
 	DELIVRED,
-	PAYED;
+	PAYED,
+	CANCEL;
 
 }
