@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.dao.UserDaoImpl;
 import com.ausecourse.model.User;
-
+@CrossOrigin
 @RestController
 public class UserController {
 //routes
