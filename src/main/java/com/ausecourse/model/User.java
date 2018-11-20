@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,27 +23,25 @@ import com.ausecourse.model.security.Authority;
 import com.ausecourse.model.security.UserRole;
 
 import jdk.internal.jline.internal.Log;
-import lombok.EqualsAndHashCode;
 
 
 @RedisHash("User")
-@EqualsAndHashCode(exclude = { "userRoles" })
 public class User implements UserDetails,Serializable {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(User.class);
 	
 	@Id
-	@EqualsAndHashCode.Exclude private String id;
-	@EqualsAndHashCode.Exclude private String name;
+	private String id;
+	private String name;
 	@Indexed private String username;
 	private String password; 
 
 	private String email;
-	@EqualsAndHashCode.Exclude private int tel;
-	@EqualsAndHashCode.Exclude private int numeroRoad;
-	@EqualsAndHashCode.Exclude private String Road;
-	@EqualsAndHashCode.Exclude private String city;
-	@EqualsAndHashCode.Exclude private String country; // tout en maj
+	private int tel;
+	private int numeroRoad;
+	private String Road;
+	private String city;
+	private String country; // tout en maj
 	
 	private @Reference Set<UserRole> userRoles = new HashSet<UserRole>();
 	
