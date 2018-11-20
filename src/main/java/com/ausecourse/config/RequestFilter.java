@@ -1,6 +1,7 @@
 package com.ausecourse.config;
 
 import javax.servlet.Filter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletRequest;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RequestFilter implements Filter{
 	
-	private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
+	//private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
 	
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) {
 		HttpServletRequest request = (HttpServletRequest) req ; 

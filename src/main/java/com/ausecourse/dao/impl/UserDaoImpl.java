@@ -23,7 +23,7 @@ import com.ausecourse.repository.UserRepository;
 @Service
 public class UserDaoImpl implements UserDao {
 
-	private static final Logger LOG =  LoggerFactory.getLogger(UserDao.class);
+	//private static final Logger LOG =  LoggerFactory.getLogger(UserDao.class);
 	
 	@Autowired
 	private UserRepository userRepository ;
@@ -39,7 +39,8 @@ public class UserDaoImpl implements UserDao {
 		User localUser = this.findByUsername(user.getNickname());
 		System.out.println("Is User null ? 2 " + user.getEmail());
 		if(localUser != null)
-			LOG.info("User with username {} already exist.Nothing will be done.",user.getNickname());
+			System.out.println("UserDaoImpl User with username {} already exist.Nothing will be done. " +  user.getNickname() );
+			//LOG.info("User with username {} already exist.Nothing will be done.",user.getNickname());
 		else {
 			for(UserRole ur : userRoles)
 				roleRepository.save(ur.getRole());

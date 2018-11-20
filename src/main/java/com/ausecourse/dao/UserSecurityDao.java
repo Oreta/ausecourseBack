@@ -19,7 +19,7 @@ import com.ausecourse.repository.UserRepository;
 @Service
 public class UserSecurityDao implements UserDetailsService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserSecurityDao.class);
+	//private static final Logger LOG = LoggerFactory.getLogger(UserSecurityDao.class);
 	
 	@Autowired
 	private UserDao userDao ; 
@@ -27,11 +27,13 @@ public class UserSecurityDao implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = this.userDao.findByUsername(username); 
 		if(null==user){
-			LOG.warn("Username {} not found" , username);
+			//LOG.warn("Username {} not found" , username);
+			System.out.println("UserSecurity file : Usersername {} not found " + username);
 			throw new UsernameNotFoundException("Username"+username+"notFound");
 			
 		}
-		LOG.warn("Username {} found " , user.getUsername());
+		System.out.println("UserSecurity file : Usersername {} found " + user.getUsername());
+		//LOG.warn("Username {} found " , user.getUsername());
 		return user ; 
 	}
 }

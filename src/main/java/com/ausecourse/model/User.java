@@ -22,13 +22,13 @@ import com.ausecourse.dao.UserSecurityDao;
 import com.ausecourse.model.security.Authority;
 import com.ausecourse.model.security.UserRole;
 
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 
 @RedisHash("User")
 public class User implements UserDetails,Serializable {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(User.class);
+	//private static final Logger LOG = LoggerFactory.getLogger(User.class);
 	
 	@Id
 	private String id;
@@ -175,7 +175,8 @@ public class User implements UserDetails,Serializable {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		for(UserRole ur : this.userRoles) { 
 			authorities.add(new Authority(ur.getRole().getName()));
-			Log.warn("user authorities {}" , ur.getRole().getName());
+			System.out.println("User file : " + "user authorities : " + ur.getRole().getName());
+			//Log.warn("user authorities {}" , ur.getRole().getName());
 		}
 		return authorities;
 	}
