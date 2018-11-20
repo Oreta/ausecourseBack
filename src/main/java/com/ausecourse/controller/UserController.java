@@ -3,26 +3,21 @@ package com.ausecourse.controller;
 
 
 import java.security.Principal;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
-import com.ausecourse.dao.IUserDao;
 import com.ausecourse.dao.UserDao;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.Role;
 import com.ausecourse.model.security.UserRole;
 import com.ausecourse.utility.MailConstructor;
 
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 
 @RestController
