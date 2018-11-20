@@ -15,12 +15,13 @@ import com.ausecourse.dao.UserDaoImpl;
 import com.ausecourse.model.User;
 
 @RestController
+@CrossOrigin()
 public class UserController {
 //routes
 	@Autowired
 	IUserDao udao;	
 	@RequestMapping(value = "/UserGetById", method = RequestMethod.GET)
-	@CrossOrigin()
+	
 	public Optional<User> UserGetById(@RequestParam("id") String id) {
 		try {
 			return udao.getById(id);
