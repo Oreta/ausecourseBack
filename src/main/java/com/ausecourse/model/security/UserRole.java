@@ -2,6 +2,7 @@ package com.ausecourse.model.security;
 
 import java.io.Serializable;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 

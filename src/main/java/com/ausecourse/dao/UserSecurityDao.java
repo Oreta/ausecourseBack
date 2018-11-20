@@ -2,6 +2,7 @@ package com.ausecourse.dao;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +18,7 @@ public class UserSecurityDao implements UserDetailsService {
 	//private static final Logger LOG = LoggerFactory.getLogger(UserSecurityDao.class);
 	
 	@Autowired
-	private UserDao userDao ; 
+	private IUserDao userDao ; 
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = this.userDao.findByUsername(username); 

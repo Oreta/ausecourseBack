@@ -4,6 +4,7 @@ package com.ausecourse.controller;
 
 import java.security.Principal;
 
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
-import com.ausecourse.dao.UserDao;
+import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.Role;
 import com.ausecourse.model.security.UserRole;
@@ -42,7 +43,7 @@ public class UserController {
 
 
 	@Autowired
-	private UserDao userDao ;
+	private IUserDao userDao ;
 	
 	@Autowired
 	private MailConstructor mailConstructor ; 

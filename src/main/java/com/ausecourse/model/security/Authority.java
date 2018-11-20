@@ -2,6 +2,7 @@ package com.ausecourse.model.security;
 
 import java.io.Serializable;
 
+
 import org.springframework.security.core.GrantedAuthority;
 
 public class Authority implements GrantedAuthority, Serializable {

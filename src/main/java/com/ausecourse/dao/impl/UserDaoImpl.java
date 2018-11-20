@@ -4,6 +4,7 @@ package com.ausecourse.dao.impl;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ausecourse.dao.UserDao;
+import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.UserRole;
 import com.ausecourse.repository.RoleRepository;
@@ -20,7 +21,7 @@ import com.ausecourse.repository.UserRepository;
 
 
 @Service
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements IUserDao {
 
 	//private static final Logger LOG =  LoggerFactory.getLogger(UserDao.class);
 	
