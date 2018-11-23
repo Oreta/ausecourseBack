@@ -2,13 +2,13 @@ package com.ausecourse.model;
 
 public class Order {
 	
-	String clientID;
-	String livreurId;
+	int clientID;
+	int livreurId;
 	int listeCourseId;
 	boolean paymentCommande;
 	OrderState orderState;
 	
-	public Order(String clientID, String livreurId, int listeCourseId, boolean paymentCommande, OrderState orderState) {
+	public Order(int clientID, int livreurId, int listeCourseId, boolean paymentCommande, OrderState orderState) {
 		super();
 		this.clientID = clientID;
 		this.livreurId = livreurId;
@@ -21,16 +21,17 @@ public class Order {
 		return "Order [clientID=" + clientID + ", livreurId=" + livreurId + ", listeCourseId=" + listeCourseId
 				+ ", paymentCommande=" + paymentCommande + ", commandeState=" + orderState + "]";
 	}
-	public String getClientID() {
+
+	public int getClientID() {
 		return clientID;
 	}
-	public void setClientID(String clientID) {
+	public void setClientID(int clientID) {
 		this.clientID = clientID;
 	}
-	public String getLivreurId() {
+	public int getLivreurId() {
 		return livreurId;
 	}
-	public void setLivreurId(String livreurId) {
+	public void setLivreurId(int livreurId) {
 		this.livreurId = livreurId;
 	}
 	public int getListeCourseId() {

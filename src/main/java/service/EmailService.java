@@ -1,4 +1,4 @@
-package com.ausecourse.service;
+package service;
 
 import java.util.Properties;
 
