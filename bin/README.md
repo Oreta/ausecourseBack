@@ -1,3 +1,0 @@
-# AuSecourse
-
-projet startup
