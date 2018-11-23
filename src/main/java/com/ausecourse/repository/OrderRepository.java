@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ausecourse.model.Order;
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order, String> {
+public interface OrderRepository extends CrudRepository<Order, Integer> {
 
 }
