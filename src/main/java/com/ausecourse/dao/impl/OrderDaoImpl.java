@@ -2,7 +2,6 @@ package com.ausecourse.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +11,6 @@ import com.ausecourse.model.OrderState;
 import com.ausecourse.model.User;
 import com.ausecourse.repository.OrderRepository;
 import com.ausecourse.repository.UserRepository;
-
 
 public class OrderDaoImpl implements IOrderDAO {
 	
@@ -57,11 +55,12 @@ UserRepository userRepository;
 
 	@Override
 	public List<User> listDeliverd(String idClient, int idOrder) {
+		
 	User client = userRepository.findById(idClient).get();
 	ArrayList<User> listAll =  (ArrayList<User>) userRepository.findAll();
 	ArrayList<User> listReturn = new ArrayList<User>();
 	for (User user : listAll) {
-		if(user.getCity().equals(client.getCity())) { // todo change whit google map librairy.
+		if(user.getCity().equals(client.getCity()) && user.isDeliverer()) { // todo change whit google map librairy.
 			listReturn.add(user);
 		}
 	}

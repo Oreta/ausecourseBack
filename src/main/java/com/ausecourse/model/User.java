@@ -46,7 +46,21 @@ public class User implements UserDetails,Serializable {
 	private String Road;
 	private String city;
 	private String country; // tout en maj
+	private boolean client;
+	private boolean deliverer;
 	
+	public boolean isDeliverer() {
+		return deliverer;
+	}
+
+	public void setDeliverer(boolean deliverer) {
+		this.deliverer = deliverer;
+	}
+
+	public void setClient(boolean client) {
+		this.client = client;
+	}
+
 	private @Reference Set<UserRole> userRoles = new HashSet<UserRole>();
 	
 	public User() {
@@ -223,6 +237,10 @@ public class User implements UserDetails,Serializable {
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isClient() {
 		return false;
 	}
 

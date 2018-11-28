@@ -1,7 +1,6 @@
 package com.ausecourse.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ausecourse.model.Order;
 import com.ausecourse.model.User;
