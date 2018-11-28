@@ -16,9 +16,9 @@ public interface IOrderDAO {
 	void push(Order order);
 	
 	/*
-	 * retourne tous les livreurs pouvant effectuer cette commande.
+	 * retourne tous les livreurs pouvant effectuer cette commande, si la commande n'éxiste pas elle est crée.
 	 */
-	List<User> listDeliverd(String idClient, int idOrder); // retourne une listes de livreur pouvant la livrer. 
+	List<User> deliverer(String idClient, int idOrder); // retourne une listes de livreur pouvant la livrer. 
 	
 	/*
 	 * permet d'indiqué quelle livreur à été choisit.

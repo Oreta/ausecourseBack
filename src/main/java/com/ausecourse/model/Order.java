@@ -1,7 +1,9 @@
 package com.ausecourse.model;
 
+import org.springframework.data.annotation.Id;
+
 public class Order {
-	
+	@Id
 	String clientID;
 	String livreurId;
 	int listeCourseId;
