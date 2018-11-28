@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    AppAuthProvider authProvider
 	      = new AppAuthProvider();
 	    authProvider.setUserDetailsService(userSecurityService);
-	    authProvider.setPasswordEncoder(passwordEncoder());
+	    //authProvider.setPasswordEncoder(passwordEncoder());
 	    return authProvider;
 	}
 	

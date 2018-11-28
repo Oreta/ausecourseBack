@@ -68,7 +68,7 @@ public class UserController {
 		user.setNickname(username);
 		user.setEmail(userEmail);
 		String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ; 
-		user.setPassword(encryptedPassword);
+		user.setPassword(password);
 		
 		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
 		
