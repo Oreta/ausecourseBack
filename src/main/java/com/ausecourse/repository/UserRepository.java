@@ -10,6 +10,7 @@ import com.ausecourse.model.User;
 
 //terminée
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {
+public interface
+UserRepository extends CrudRepository<User, String> {
 
 }

@@ -3,10 +3,7 @@ package com.ausecourse.controller;
 
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,11 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
@@ -81,14 +74,15 @@ public class UserController {
 		
 		SimpleMailMessage email = mailConstructor.construcNewUserEmail(user,password) ;
 		//mailSender.send(email);
-		
 		return new ResponseEntity("User Added Successfully", HttpStatus.OK);
-		
 	}
 	
 
 	
-	
+	@GetMapping
+	public ResponseEntity<List<User>> getAll(){
+		return ResponseEntity.ok(userDao.findAll());
+	}
 	@RequestMapping(value="/forgetPassword", method=RequestMethod.POST)
 	public ResponseEntity forgetPassword(HttpServletRequest request,
 										@RequestBody HashMap<String,String> mapper) throws Exception {

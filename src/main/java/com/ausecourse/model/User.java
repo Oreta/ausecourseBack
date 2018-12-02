@@ -1,30 +1,18 @@
 package com.ausecourse.model;
 
 
-import org.springframework.data.annotation.Id;
-
-import org.springframework.data.redis.core.RedisHash;
-
-import java.io.Serializable;
-
-
-
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-
+import com.ausecourse.model.security.Authority;
+import com.ausecourse.model.security.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-
-import com.ausecourse.model.security.Authority;
-import com.ausecourse.model.security.UserRole;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 //import jdk.internal.jline.internal.Log;
 
