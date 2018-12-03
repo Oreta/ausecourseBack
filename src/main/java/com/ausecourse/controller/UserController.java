@@ -31,54 +31,55 @@ public class UserController {
 
 	@Autowired
 	private IUserDao userDao ;
-	
-	@Autowired
-	private MailConstructor mailConstructor ; 
-	
-	//@Autowired//import jdk.internal.jline.internal.Log;
-	//private JavaMailSender mailSender ; 
 
-	
+	@Autowired
+	private MailConstructor mailConstructor ;
+
+	//@Autowired//import jdk.internal.jline.internal.Log;
+	//private JavaMailSender mailSender ;
+
+
 	@RequestMapping(value="/newUser", method=RequestMethod.POST)
 	public ResponseEntity newUserPost(HttpServletRequest request,
 										@RequestBody HashMap<String,String> mapper) throws Exception {
-		
+
 		String username = mapper.get("username") ;
 		String userEmail = mapper.get("email");
 		String password = mapper.get("password") ;
-		
-		
-		
+
+
+System.out.println("controller " +" ... " + username);
 		if(userDao.findByUsername(username) != null){
 			return new ResponseEntity("usernameExists" , HttpStatus.BAD_REQUEST);
 		}
-		
+
 		if(userDao.findByEmail(userEmail) != null){
 			return new ResponseEntity("emailExists" , HttpStatus.BAD_REQUEST);
 		}
-		
-		User user = new User(); 
+
+		User user = new User();
 		user.setNickname(username);
+
 		user.setEmail(userEmail);
-		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ; 
+		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(password);
-		
+
 		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
-		
-		Role role = new Role(); 
+
+		Role role = new Role();
 		role.setRoleId("1");
 		role.setName("ROLE_USER");
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, role)) ; 
+		userRoles.add(new UserRole(user, role)) ;
 		userDao.createUser(user, userRoles);
-		
+
 		SimpleMailMessage email = mailConstructor.construcNewUserEmail(user,password) ;
 		//mailSender.send(email);
 		return new ResponseEntity("User Added Successfully", HttpStatus.OK);
 	}
-	
 
-	
+
+
 	@GetMapping
 	public ResponseEntity<List<User>> getAll(){
 		return ResponseEntity.ok(userDao.findAll());
@@ -86,49 +87,49 @@ public class UserController {
 	@RequestMapping(value="/forgetPassword", method=RequestMethod.POST)
 	public ResponseEntity forgetPassword(HttpServletRequest request,
 										@RequestBody HashMap<String,String> mapper) throws Exception {
-		User user = userDao.findByEmail(mapper.get("email")) ; 
-		
+		User user = userDao.findByEmail(mapper.get("email")) ;
+
 		if(user == null){
 			return new ResponseEntity("Email not found" , HttpStatus.BAD_REQUEST);
 		}
-		
-		String password = SecurityUtility.randomPassword() ; 
-		String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ; 
+
+		String password = SecurityUtility.randomPassword() ;
+		String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(encryptedPassword);
 		userDao.save(user);
-		
-		SimpleMailMessage newEmail = mailConstructor.construcNewUserEmail(user,password) ; 
+
+		SimpleMailMessage newEmail = mailConstructor.construcNewUserEmail(user,password) ;
 		//mailSender.send(newEmail);
-		
+
 		return new ResponseEntity("Email sent!", HttpStatus.OK);
-		
+
 	}
 
-	
+
 	@RequestMapping(value="/updateUserInfo", method=RequestMethod.POST)
 	public ResponseEntity profileInfo(
 				@RequestBody HashMap<String, Object> mapper
 			) throws Exception{
-		
+
 		String id = (String) mapper.get("id");
 		String email = (String) mapper.get("email");
 		String username = (String) mapper.get("username");
 		String newPassword = (String) mapper.get("newPassword");
 		String currentPassword = (String) mapper.get("currentPassword");
-		
+
 		Optional<User> currentUser = userDao.findById(id);
-		
+
 		if(currentUser == null) {
 			throw new Exception ("User not found");
 		}
-		
-		
+
+
 		SecurityConfig securityConfig = new SecurityConfig();
-		
-		
+
+
 			BCryptPasswordEncoder passwordEncoder = SecurityConfig.passwordEncoder();
 			String dbPassword = currentUser.get().getPassword();
-			
+
 			if(null != currentPassword)
 			if(passwordEncoder.matches(currentPassword, dbPassword)) {
 				if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
@@ -137,35 +138,35 @@ public class UserController {
 			} else {
 				return new ResponseEntity("Incorrect current password!", HttpStatus.BAD_REQUEST);
 			}
-		
+
 
 
 		currentUser.get().setNickname(username);
 
 		currentUser.get().setEmail(email);
-		
-		
-		
+
+
+
 		userDao.save(currentUser.get());
-		
+
 		return new ResponseEntity("Update Success", HttpStatus.OK);
 	}
 
 	@RequestMapping(value ="/getCurrentUser" , method = RequestMethod.GET)
 	@ResponseBody
 	public User getCurrentUser(HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal(); 
-		User user = new User(); 
+		Principal principal = request.getUserPrincipal();
+		User user = new User();
 		System.out.println("test " + (principal == null));
 		if(null != principal) {
 			System.out.println("principal nullllll ");
-			user = this.userDao.findByUsername(principal.getName()) ; 
+			user = this.userDao.findByUsername(principal.getName()) ;
 		}
-		
-		return user ; 
-		
+
+		return user ;
+
 	}
-	
+
 
 
 }
