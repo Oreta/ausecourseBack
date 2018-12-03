@@ -122,17 +122,6 @@ public class UserController {
 			throw new Exception ("User not found");
 		}
 		
-		/*if(userService.findByEmail(email) != null) {
-			if(userService.findByEmail(email).getId() != currentUser.getId()) {
-				return new ResponseEntity("Email not found!", HttpStatus.BAD_REQUEST);
-			}
-		}*/
-		
-		/*if(userService.findByUsername(username) != null) {
-			if(userService.findByUsername(username).getId() != currentUser.getId()) {
-				return new ResponseEntity("Username not found!", HttpStatus.BAD_REQUEST);
-			}
-		}*/
 		
 		SecurityConfig securityConfig = new SecurityConfig();
 		
@@ -149,10 +138,7 @@ public class UserController {
 				return new ResponseEntity("Incorrect current password!", HttpStatus.BAD_REQUEST);
 			}
 		
-		
-		//currentUser.get().setFirstName(firstName);
-		
-		//currentUser.get().setLastName(lastName);
+
 
 		currentUser.get().setNickname(username);
 
