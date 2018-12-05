@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("Order")
 public class Order {
 	@Id
+	int id;
 	String clientID;
 	String livreurId;
 	List <Product> listProduct;
@@ -21,17 +22,12 @@ public class Order {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Order [clientID=" + clientID + ", livreurId=" + livreurId + ", listProduct=" + listProduct
-				+ ", orderState=" + orderState + "]";
+
+	public int getId() {
+		return id;
 	}
-	public Order(String clientID, String livreurId, List<Product> listProduct, OrderState orderState) {
-		super();
-		this.clientID = clientID;
-		this.livreurId = livreurId;
-		this.listProduct = listProduct;
-		this.orderState = orderState;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getClientID() {
 		return clientID;
@@ -51,6 +47,19 @@ public class Order {
 	}
 	public void setOrderState(OrderState orderState) {
 		this.orderState = orderState;
+	}
+	public Order(int id, String clientID, String livreurId, List<Product> listProduct, OrderState orderState) {
+		super();
+		this.id = id;
+		this.clientID = clientID;
+		this.livreurId = livreurId;
+		this.listProduct = listProduct;
+		this.orderState = orderState;
+	}
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", clientID=" + clientID + ", livreurId=" + livreurId + ", listProduct="
+				+ listProduct + ", orderState=" + orderState + "]";
 	}
 
 }
