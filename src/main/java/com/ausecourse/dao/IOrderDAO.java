@@ -6,17 +6,28 @@ import com.ausecourse.model.Order;
 import com.ausecourse.model.User;
 
 public interface IOrderDAO {
-
+	
 	Order getById(int id);
+	List<Order> getAllOrderByIdClient(String idClient);
 
 	void update(Order order);
-
+	
+	
+	/* normalement a ne pas utilisée voir cancel */
 	void delete(int id);
-
+	/*
+	 * pas sensée être utilisée
+	 */
 	void push(Order order);
 	
+	
 	/*
-	 * retourne tous les livreurs pouvant effectuer cette commande, si la commande n'éxiste pas elle est crée.
+	 * créer une commande 
+	 */
+	int createOrder(String idClient);
+	
+	/*
+	 * retourne tous les livreurs pouvant effectuer cette commande.
 	 */
 	List<User> deliverer(String idClient, int idOrder); // retourne une listes de livreur pouvant la livrer. 
 	
@@ -40,6 +51,7 @@ public interface IOrderDAO {
 	 */
 	 
 	void orderPayed(int idorder);
+	
 	 
 	 
 	

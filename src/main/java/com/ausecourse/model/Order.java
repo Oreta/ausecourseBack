@@ -1,5 +1,7 @@
 package com.ausecourse.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 @RedisHash("Order")
@@ -7,22 +9,29 @@ public class Order {
 	@Id
 	String clientID;
 	String livreurId;
-	int listeCourseId;
-	boolean paymentCommande;
+	List <Product> listProduct;
+
 	OrderState orderState;
 	
-	public Order(String clientID, String livreurId, int listeCourseId, boolean paymentCommande, OrderState orderState) {
+	public List<Product> getListProduct() {
+		return listProduct;
+	}
+	public void setListProduct(List<Product> listProduct) {
+		this.listProduct = listProduct;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Order [clientID=" + clientID + ", livreurId=" + livreurId + ", listProduct=" + listProduct
+				+ ", orderState=" + orderState + "]";
+	}
+	public Order(String clientID, String livreurId, List<Product> listProduct, OrderState orderState) {
 		super();
 		this.clientID = clientID;
 		this.livreurId = livreurId;
-		this.listeCourseId = listeCourseId;
-		this.paymentCommande = paymentCommande;
+		this.listProduct = listProduct;
 		this.orderState = orderState;
-	}
-	@Override
-	public String toString() {
-		return "Order [clientID=" + clientID + ", livreurId=" + livreurId + ", listeCourseId=" + listeCourseId
-				+ ", paymentCommande=" + paymentCommande + ", commandeState=" + orderState + "]";
 	}
 	public String getClientID() {
 		return clientID;
@@ -36,18 +45,7 @@ public class Order {
 	public void setLivreurId(String livreurId) {
 		this.livreurId = livreurId;
 	}
-	public int getListeCourseId() {
-		return listeCourseId;
-	}
-	public void setListeCourseId(int listeCourseId) {
-		this.listeCourseId = listeCourseId;
-	}
-	public boolean isPaymentCommande() {
-		return paymentCommande;
-	}
-	public void setPaymentCommande(boolean paymentCommande) {
-		this.paymentCommande = paymentCommande;
-	}
+
 	public OrderState getOrderState() {
 		return orderState;
 	}

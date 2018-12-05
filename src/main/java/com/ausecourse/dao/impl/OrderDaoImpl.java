@@ -50,6 +50,14 @@ public class OrderDaoImpl implements IOrderDAO {
 		orderRepository.save(order);
 
 	}
+	
+	@Override
+	public int createOrder(String idClient) {
+		// auto increment, see if better method
+		int idOrder = (int) (orderRepository.count()+1);
+		orderRepository.save(new Order(idClient, "null", null, OrderState.CREATE));
+		return 0;
+	}
 
 	@Override
 	public List<User> deliverer(String idClient, int idOrder) {
@@ -76,6 +84,21 @@ public class OrderDaoImpl implements IOrderDAO {
 		orderRepository.save(order);
 
 	}
+	
+
+	@Override
+	public List<Order> getAllOrderByIdClient(String idClient) {
+	ArrayList<Order> listOrder	=(ArrayList<Order>) orderRepository.findAll();
+	ArrayList<Order>  listeReturn= new ArrayList<Order>();
+	for (Order order : listOrder) {
+		if(order.getClientID().equals(idClient)) {
+			listeReturn.add(order);
+		}
+		
+	}
+	return listeReturn;
+	}
+
 
 	@Override
 	public void cancelOrder(int idOrder) {
@@ -108,5 +131,7 @@ public class OrderDaoImpl implements IOrderDAO {
 		orderRepository.save(order);
 
 	}
+
+
 
 }
