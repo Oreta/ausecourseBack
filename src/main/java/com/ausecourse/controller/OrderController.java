@@ -39,7 +39,7 @@ public class OrderController {
 //
 //	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ResponseEntity update(@RequestBody Order order) throws Exception {
 
 		try {
@@ -53,7 +53,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/getById", method = RequestMethod.POST)
+	@RequestMapping(value = "/getById", method = RequestMethod.GET)
 	public Order getById(int id) throws Exception {
 		Order order = null;
 		try {
@@ -67,7 +67,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.POST)
+	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.GET)
 	public List<Order> getAllByIdClient(String idClient) {
 		List<Order> order = null;
 		try {
@@ -95,7 +95,7 @@ public class OrderController {
 //
 //	}
 
-	@RequestMapping(value = "/deliverer", method = RequestMethod.POST)
+	@RequestMapping(value = "/deliverer", method = RequestMethod.GET)
 	public List<User> deliverer(String idClient, int idOrder) throws Exception {
 		List<User> users = null;
 
@@ -109,8 +109,23 @@ public class OrderController {
 		return users;
 
 	}
+	
+	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
+	public int createOrder(String idClient) throws Exception {
+		int idOrder = 0;
 
-	@RequestMapping(value = "/deliveredChoice", method = RequestMethod.POST)
+		try {
+			idOrder = orderDao.createOrder(idClient);
+		} catch (Exception e) {
+			System.err.println(e.getStackTrace());
+
+		}
+
+		return idOrder;
+
+	}
+
+	@RequestMapping(value = "/deliveredChoice", method = RequestMethod.PUT)
 	public ResponseEntity deliveredChoice(String idLivreur, int idOrder) throws Exception {
 		List<User> users = null;
 
@@ -126,7 +141,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/acceptOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/acceptOrder", method = RequestMethod.PUT)
 	public ResponseEntity acceptOrder(int idOrder) throws Exception {
 		List<User> users = null;
 
@@ -142,7 +157,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/orderDone", method = RequestMethod.POST)
+	@RequestMapping(value = "/orderDone", method = RequestMethod.PUT)
 	public ResponseEntity orderDone(int idOrder) throws Exception {
 		List<User> users = null;
 
@@ -158,7 +173,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/cancelOrder", method = RequestMethod.PUT)
 	public ResponseEntity cancelOrder(int idOrder) throws Exception {
 		List<User> users = null;
 
@@ -174,7 +189,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/orderPayed", method = RequestMethod.POST)
+	@RequestMapping(value = "/orderPayed", method = RequestMethod.PUT)
 	public ResponseEntity orderPayed(int idOrder) throws Exception {
 		List<User> users = null;
 
