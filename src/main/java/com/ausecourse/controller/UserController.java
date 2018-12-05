@@ -77,8 +77,9 @@ System.out.println("controller " +" ... " + username);
 		//mailSender.send(email);
 		return new ResponseEntity("User Added Successfully", HttpStatus.OK);
 	}
-
-
+	
+	
+	
 
 	@GetMapping
 	public ResponseEntity<List<User>> getAll(){
@@ -104,6 +105,45 @@ System.out.println("controller " +" ... " + username);
 		return new ResponseEntity("Email sent!", HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value="/newUserOk", method=RequestMethod.POST)
+	public ResponseEntity newUserOk(HttpServletRequest request,
+										@RequestBody User user) throws Exception {
+
+		
+System.out.println(user);
+
+System.out.println("controller " +" ... " + user.getUsername());
+		if(userDao.findByUsername(user.getUsername()) != null){
+			return new ResponseEntity("usernameExists" , HttpStatus.BAD_REQUEST);
+		}
+
+		if(userDao.findByEmail(user.getUsername()) != null){
+			return new ResponseEntity("emailExists" , HttpStatus.BAD_REQUEST);
+		}
+
+		
+		user.setNickname(user.getName());
+
+		user.setEmail(user.getEmail());
+		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
+		user.setPassword(user.getPassword());
+
+		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
+
+		Role role = new Role();
+		role.setRoleId("1");
+		role.setName("ROLE_USER");
+		Set<UserRole> userRoles = new HashSet<>();
+		userRoles.add(new UserRole(user, role)) ;
+		userDao.createUser(user, userRoles);
+
+		//SimpleMailMessage email = mailConstructor.construcNewUserEmail(user,user.getPassword()) ;
+		//mailSender.send(email);
+		return new ResponseEntity("User Added Successfully", HttpStatus.OK);
+	}
+
+
 
 
 	@RequestMapping(value="/updateUserInfo", method=RequestMethod.POST)
