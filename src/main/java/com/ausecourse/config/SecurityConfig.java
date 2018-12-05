@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)throws Exception {
 		auth.authenticationProvider(authenticationProvider());
-		auth.userDetailsService(this.userSecurityService).passwordEncoder(SecurityConfig.passwordEncoder());
+		//auth.userDetailsService(this.userSecurityService).passwordEncoder(SecurityConfig.passwordEncoder());
 	}
 	
     @Bean
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    AppAuthProvider authProvider
 	      = new AppAuthProvider();
 	    authProvider.setUserDetailsService(userSecurityService);
-	    authProvider.setPasswordEncoder(passwordEncoder());
+	    //authProvider.setPasswordEncoder(passwordEncoder());
 	    return authProvider;
 	}
 	
