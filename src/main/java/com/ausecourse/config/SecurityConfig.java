@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserSecurityDao userSecurityService;
 
 
-	private static final String[] PUBLIC_MATCHES = { "/test/**", "/user/**" };
+	private static final String[] PUBLIC_MATCHES = { "/test/**", "/user/**","/order/**" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

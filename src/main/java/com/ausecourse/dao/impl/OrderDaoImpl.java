@@ -54,9 +54,9 @@ public class OrderDaoImpl implements IOrderDAO {
 	@Override
 	public int createOrder(String idClient) {
 		// auto increment, see if better method
-		
-		orderRepository.save(new Order(0,idClient, "null", null, OrderState.CREATE));
-		return 0;
+		int id = (int) (orderRepository.count()+1);
+		orderRepository.save(new Order(id,idClient, "null", null, OrderState.CREATE));
+		return id;
 	}
 
 	@Override
