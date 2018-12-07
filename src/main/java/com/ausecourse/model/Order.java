@@ -1,11 +1,12 @@
 package com.ausecourse.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 @RedisHash("Order")
-public class Order {
+public class Order implements Serializable{
 	@Id
 	int id;
 	String clientID;
