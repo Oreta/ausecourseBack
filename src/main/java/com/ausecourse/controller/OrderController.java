@@ -1,5 +1,6 @@
 package com.ausecourse.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,13 +104,15 @@ public class OrderController {
 //	}
 
 	@RequestMapping(value = "/deliverer", method = RequestMethod.GET)
-	public List<User> deliverer( String idClient, int idOrder) throws Exception {
+	public List<User> deliverer(@RequestBody HashMap<String, String> params) throws Exception {
+		String idClient= params.get("idClient"); // mail
+		int idOrder= Integer.parseInt(params.get("idOrder"));
 		List<User> users = null;
 		
 		try {
 			users = orderDao.deliverer(idClient, idOrder);
 		} catch (Exception e) {
-			System.err.println(e.getStackTrace());
+			System.err.println(e.getMessage()+" "+e.getCause());
 
 		}
 

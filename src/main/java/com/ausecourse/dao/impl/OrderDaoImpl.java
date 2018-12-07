@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ausecourse.dao.IOrderDAO;
+import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.Order;
 import com.ausecourse.model.OrderState;
 import com.ausecourse.model.User;
@@ -22,7 +23,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	OrderRepository orderRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	IUserDao userDAO;
 
 	@Override
 	public Order getById(int id) {
@@ -62,8 +63,8 @@ public class OrderDaoImpl implements IOrderDAO {
 	@Override
 	public List<User> deliverer(String idClient, int idOrder) {
 
-		User client = userRepository.findById(idClient).get();
-		ArrayList<User> listAll = (ArrayList<User>) userRepository.findAll();
+		User client = userDAO.findByEmail(idClient);
+		ArrayList<User> listAll = (ArrayList<User>) userDAO.findAll();
 		ArrayList<User> listReturn = new ArrayList<User>();
 		for (User user : listAll) {
 			if (user.getCity().equals(client.getCity()) && user.isDeliverer()) { // todo change whit google map
