@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ausecourse.dao.IOrderDAO;
 import com.ausecourse.dao.IUserDao;
+import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
 import com.ausecourse.model.OrderState;
 import com.ausecourse.model.User;
@@ -53,10 +54,10 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 	
 	@Override
-	public int createOrder(String idClient) {
+	public int createOrder(String idClient,ListeCourse listeCourse) {
 		// auto increment, see if better method
 		int id = (int) (orderRepository.count()+1);
-		orderRepository.save(new Order(id,idClient, "null", null, OrderState.CREATE));
+		orderRepository.save(new Order(id,idClient, null, listeCourse, OrderState.CREATE));
 		return id;
 	}
 

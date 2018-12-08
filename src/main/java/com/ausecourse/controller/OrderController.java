@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ausecourse.dao.IOrderDAO;
 import com.ausecourse.dao.IUserDao;
+import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
 import com.ausecourse.model.User;
 /* dans un cas classique, ordre des principaux  ctrl a appelée:
@@ -47,19 +48,19 @@ public class OrderController {
 //
 //	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ResponseEntity update(@RequestBody Order order) throws Exception {
-
-		try {
-			orderDao.push(order);
-		} catch (Exception e) {
-			System.err.println(e.getStackTrace());
-			return new ResponseEntity("uptdate faill", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		return new ResponseEntity("uptdate Success", HttpStatus.OK);
-
-	}
+//	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+//	public ResponseEntity update(@RequestBody Order order) throws Exception {
+//
+//		try {
+//			orderDao.push(order);
+//		} catch (Exception e) {
+//			System.err.println(e.getStackTrace());
+//			return new ResponseEntity("uptdate faill", HttpStatus.NOT_ACCEPTABLE);
+//		}
+//
+//		return new ResponseEntity("uptdate Success", HttpStatus.OK);
+//
+//	}
 
 	@RequestMapping(value = "/getById", method = RequestMethod.GET)
 	public Order getById(@RequestBody int id) throws Exception {
@@ -76,10 +77,10 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.GET)
-	public List<Order> getAllByIdClient(@RequestBody String idClient) {
+	public List<Order> getAllByIdClient(@RequestBody String mail) {
 		List<Order> order = null;
 		try {
-			order = orderDao.getAllOrderByIdClient(idClient);
+			order = orderDao.getAllOrderByIdClient(mail);
 		} catch (Exception e) {
 			System.err.println(e.getStackTrace());
 			return null;
@@ -119,13 +120,16 @@ public class OrderController {
 		return users;
 
 	}
-	
+	// hashmap 
+//	mail->"mail"
+//	listeCourse->ListeCourseJSon
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
-	public int createOrder(@RequestBody String idClient) throws Exception {
+	public int createOrder(@RequestBody ListeCourse l) throws Exception {
 		int idOrder = 0;
-
+		System.out.println(l);
+		
 		try {
-			idOrder = orderDao.createOrder(idClient);
+			idOrder = orderDao.createOrder(l.getMail(),l);
 		} catch (Exception e) {
 			System.err.println(e.getStackTrace());
 
@@ -136,11 +140,13 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/deliveredChoice", method = RequestMethod.PUT)
-	public ResponseEntity deliveredChoice(@RequestBody String idLivreur, int idOrder) throws Exception {
+	public ResponseEntity deliveredChoice(@RequestBody HashMap<String, Object> hm) throws Exception {
+		String mailLivreur= (String) hm.get("mailLivreur");
+		int idOrder = (int) hm.get("idOrder");
 		List<User> users = null;
 
 		try {
-			orderDao.deliveredChoice(idOrder, idLivreur);
+			orderDao.deliveredChoice(idOrder, mailLivreur);
 		} catch (Exception e) {
 			System.err.println(e.getStackTrace());
 			return new ResponseEntity("delete faill", HttpStatus.NOT_ACCEPTABLE);

@@ -11,19 +11,27 @@ public class Order implements Serializable{
 	int id;
 	String clientID;
 	String livreurId;
-	List <Product> listProduct;
+	ListeCourse listeCourse;
 
 	OrderState orderState;
 	
-	public List<Product> getListProduct() {
-		return listProduct;
+
+
+
+	public Order(int id, String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
+		super();
+		this.id = id;
+		this.clientID = clientID;
+		this.livreurId = livreurId;
+		this.listeCourse = listeCourse;
+		this.orderState = orderState;
 	}
-	public void setListProduct(List<Product> listProduct) {
-		this.listProduct = listProduct;
+	public ListeCourse getListeCourse() {
+		return listeCourse;
 	}
-
-
-
+	public void setListeCourse(ListeCourse listeCourse) {
+		this.listeCourse = listeCourse;
+	}
 	public int getId() {
 		return id;
 	}
@@ -49,18 +57,11 @@ public class Order implements Serializable{
 	public void setOrderState(OrderState orderState) {
 		this.orderState = orderState;
 	}
-	public Order(int id, String clientID, String livreurId, List<Product> listProduct, OrderState orderState) {
-		super();
-		this.id = id;
-		this.clientID = clientID;
-		this.livreurId = livreurId;
-		this.listProduct = listProduct;
-		this.orderState = orderState;
-	}
+
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", clientID=" + clientID + ", livreurId=" + livreurId + ", listProduct="
-				+ listProduct + ", orderState=" + orderState + "]";
+		return "Order [id=" + id + ", clientID=" + clientID + ", livreurId=" + livreurId + ", listeCourse="
+				+ listeCourse + ", orderState=" + orderState + "]";
 	}
 
 }

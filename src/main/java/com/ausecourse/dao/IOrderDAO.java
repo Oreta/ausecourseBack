@@ -2,6 +2,7 @@ package com.ausecourse.dao;
 
 import java.util.List;
 
+import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
 import com.ausecourse.model.User;
 
@@ -24,7 +25,7 @@ public interface IOrderDAO {
 	/*
 	 * créer une commande 
 	 */
-	int createOrder(String idClient);
+	int createOrder(String idClient,ListeCourse listeCourse);
 	
 	/*
 	 * retourne tous les livreurs pouvant effectuer cette commande.
