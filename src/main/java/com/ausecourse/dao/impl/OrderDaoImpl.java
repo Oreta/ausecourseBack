@@ -27,7 +27,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	IUserDao userDAO;
 
 	@Override
-	public Order getById(int id) {
+	public Order getById(String id) {
 
 		return orderRepository.findById(id).get();
 	}
@@ -40,7 +40,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(String id) {
 		Order order = orderRepository.findById(id).get();
 		order.setOrderState(OrderState.CANCEL);
 		orderRepository.save(order);
@@ -54,15 +54,15 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 	
 	@Override
-	public int createOrder(String idClient,ListeCourse listeCourse) {
+	public String createOrder(String idClient,ListeCourse listeCourse) {
 		// auto increment, see if better method
-		int id = (int) (orderRepository.count()+1);
-		orderRepository.save(new Order(id,idClient, null, listeCourse, OrderState.CREATE));
-		return id;
+		
+		return orderRepository.save(new Order(null,idClient, null, listeCourse, OrderState.CREATE)).getId();
+		
 	}
 
 	@Override
-	public List<User> deliverer(String idClient, int idOrder) {
+	public List<User> deliverer(String idClient, String idOrder) {
 
 		User client = userDAO.findByEmail(idClient);
 		ArrayList<User> listAll = (ArrayList<User>) userDAO.findAll();
@@ -79,7 +79,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 
 	@Override
-	public void deliveredChoice(int idOrder, String idLiveur) {
+	public void deliveredChoice(String idOrder, String idLiveur) {
 
 		Order order = orderRepository.findById(idOrder).get();
 		order.setLivreurId(idLiveur);
@@ -103,7 +103,7 @@ public class OrderDaoImpl implements IOrderDAO {
 
 
 	@Override
-	public void cancelOrder(int idOrder) {
+	public void cancelOrder(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
 		order.setOrderState(OrderState.CANCEL);
 		orderRepository.save(order);
@@ -111,7 +111,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 
 	@Override
-	public void acceptOrder(int idOrder) {
+	public void acceptOrder(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
 		order.setOrderState(OrderState.INPROGRESS);
 		orderRepository.save(order);
@@ -119,7 +119,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 
 	@Override
-	public void orderDone(int idOrder) {
+	public void orderDone(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
 		order.setOrderState(OrderState.DELIVRED);
 		orderRepository.save(order);
@@ -127,7 +127,7 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 
 	@Override
-	public void orderPayed(int idOrder) {
+	public void orderPayed(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
 		order.setOrderState(OrderState.PAYED);
 		orderRepository.save(order);

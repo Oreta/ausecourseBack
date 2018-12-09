@@ -8,14 +8,14 @@ import com.ausecourse.model.User;
 
 public interface IOrderDAO {
 	
-	Order getById(int id);
+	Order getById(String id);
 	List<Order> getAllOrderByIdClient(String idClient);
 
 	void update(Order order);
 	
 	
 	/* normalement a ne pas utilisée voir cancel */
-	void delete(int id);
+	void delete(String id);
 	/*
 	 * pas sensée être utilisée
 	 */
@@ -25,33 +25,33 @@ public interface IOrderDAO {
 	/*
 	 * créer une commande 
 	 */
-	int createOrder(String idClient,ListeCourse listeCourse);
+	String createOrder(String idClient,ListeCourse listeCourse);
 	
 	/*
 	 * retourne tous les livreurs pouvant effectuer cette commande.
 	 */
-	List<User> deliverer(String idClient, int idOrder); // retourne une listes de livreur pouvant la livrer. 
+	List<User> deliverer(String idClient, String idOrder); // retourne une listes de livreur pouvant la livrer. 
 	
 	/*
 	 * permet d'indiqué quelle livreur à été choisit.
 	 */
-	void deliveredChoice(int idOrder, String idLiveur);
+	void deliveredChoice(String idOrder, String idLiveur);
 	
-	void cancelOrder(int idOrder);
+	void cancelOrder(String idOrder);
 	
 	/*
 	 * étape de confirmation d'une commande de la part d'un client.
 	 */
 	
-	void acceptOrder(int idCommande);
+	void acceptOrder(String idCommande);
 	
-	void orderDone(int idCommande);
+	void orderDone(String idCommande);
 	
 	/*
 	 * Permet à un livreur d'inqiquer qu'une commande à été payée. 
 	 */
 	 
-	void orderPayed(int idorder);
+	void orderPayed(String idorder);
 	
 	 
 	 

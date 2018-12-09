@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("Order")
 public class Order implements Serializable{
 	@Id
-	int id;
+	String id;
 	String clientID;
 	String livreurId;
 	ListeCourse listeCourse;
@@ -18,7 +18,7 @@ public class Order implements Serializable{
 
 
 
-	public Order(int id, String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
+	public Order(String id, String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
 		super();
 		this.id = id;
 		this.clientID = clientID;
@@ -32,10 +32,10 @@ public class Order implements Serializable{
 	public void setListeCourse(ListeCourse listeCourse) {
 		this.listeCourse = listeCourse;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getClientID() {
