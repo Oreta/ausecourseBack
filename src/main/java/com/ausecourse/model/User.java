@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 //import jdk.internal.jline.internal.Log;
@@ -38,6 +39,19 @@ public class User implements UserDetails,Serializable {
 	private boolean client;
 	private boolean deliverer;
 	
+	//se rempli avec les identifiants des liste de courses dont il est notifie quand il est en mode livreur
+	private List<String> courses ; 
+	
+	
+	
+	public List<String> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<String> courses) {
+		this.courses = courses;
+	}
+
 	public boolean isDeliverer() {
 		return deliverer;
 	}

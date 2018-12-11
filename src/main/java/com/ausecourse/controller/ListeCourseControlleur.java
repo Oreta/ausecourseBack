@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.tree.ExpandVetoException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class ListeCourseControlleur {
 
 	}
 	
-	@RequestMapping(value = "/getById", method = RequestMethod.GET)
+	@RequestMapping(value = "/getById", method = RequestMethod.POST)
 	public ListeCourse getById(@RequestBody String id) throws Exception {
 		ListeCourse listeCourse = null;
 
@@ -69,7 +70,7 @@ public class ListeCourseControlleur {
 	public String save(@RequestBody ListeCourse l) throws Exception {
 		List<ListeCourse> listeCourse = null;
 		String rep = null;
-		
+		System.out.println("liste de coursee farine" + l.getList().get("farine"));
 //		HashMap<String, Integer> hm = new HashMap<>();
 //		hm.put("pain", 1);
 //		hm.put("confiture",2);
@@ -102,6 +103,8 @@ public class ListeCourseControlleur {
 
 	}
 	
+	
+	
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public ResponseEntity delete(@RequestBody String ListeCourseID) throws Exception {
 		List<ListeCourse> listeCourse = null;
@@ -118,5 +121,20 @@ public class ListeCourseControlleur {
 
 	}
 	
+	@RequestMapping(value = "/addToList", method = RequestMethod.POST)
+	public ResponseEntity addToList(HttpServletRequest request,
+			@RequestBody HashMap<String,String> mapper) throws Exception {
+			
+		String listId = mapper.get("listId") ;
+		String name = mapper.get("name");
+		String qty = mapper.get("qty") ;
+		
+		
+		ListeCourse listeCourse = this.listeCourseDao.findById(listId) ; 
+		listeCourse.getList().put(name, Integer.parseInt(qty)) ; 
+		this.listeCourseDao.save(listeCourse); 
+		return new ResponseEntity("product added !! ",HttpStatus.OK);
+
+	}
 
 }

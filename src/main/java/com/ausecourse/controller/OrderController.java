@@ -170,7 +170,6 @@ public class OrderController {
 		}
 
 		return new ResponseEntity("acceptOrder Success", HttpStatus.OK);
-
 	}
 
 	@RequestMapping(value = "/orderDone", method = RequestMethod.PUT)

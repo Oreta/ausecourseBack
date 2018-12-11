@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
+import com.ausecourse.dao.IListeCourseDAO;
 import com.ausecourse.dao.IUserDao;
+import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.Role;
 import com.ausecourse.model.security.UserRole;
@@ -32,6 +34,8 @@ public class UserController {
 	@Autowired
 	private IUserDao userDao ;
 
+	@Autowired 
+	private IListeCourseDAO listeCourseDao ; 
 	@Autowired
 	private MailConstructor mailConstructor ;
 
@@ -46,6 +50,7 @@ public class UserController {
 		String username = mapper.get("username") ;
 		String userEmail = mapper.get("email");
 		String password = mapper.get("password") ;
+		String mode = mapper.get("mode");
 
 
 System.out.println("controller " +" ... " + username);
@@ -63,6 +68,11 @@ System.out.println("controller " +" ... " + username);
 		user.setEmail(userEmail);
 		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(password);
+		if(mode.equals("livreur")) 
+			user.setDeliverer(true);
+		else
+			user.setClient(true);
+	
 
 		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
 
@@ -202,9 +212,53 @@ System.out.println("controller " +" ... " + user.getUsername());
 			System.out.println("principal nullllll ");
 			user = this.userDao.findByUsername(principal.getName()) ;
 		}
+		
+		System.out.println("livrerrrrr " + user.isDeliverer());
 
 		return user ;
 
+	}
+
+	@RequestMapping(value ="/getLivreurs" , method = RequestMethod.GET)
+	@ResponseBody
+	public List<User> getLivreurs(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		List<User> users = this.userDao.findAll(); 
+		List<User> res = new ArrayList<User>() ;
+		
+		for(int i=0;i<users.size();i++) {
+			if(users.get(i).isDeliverer())
+				res.add(users.get(i)); 
+		}
+		
+		return res; 
+	}
+	
+	@RequestMapping(value ="/notifyLivreur" , method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity notifyLivreur(HttpServletRequest request,
+			@RequestBody HashMap<String,String> mapper) throws Exception {
+		String livreurId = mapper.get("livreurId") ;
+		//momentanement clientId, pour l'instant le livreur choisi oui ou non de livrer en fonction du client 
+		String listeCourseId = mapper.get("listeCourseId");
+		User livreur = this.userDao.findById(livreurId).get(); 
+		livreur.getCourses().add(listeCourseId); 
+		this.userDao.save(livreur); 
+		return new ResponseEntity("notification success", HttpStatus.OK);
+	
+	}
+	
+	@RequestMapping(value ="/getNotification" , method = RequestMethod.POST)
+	@ResponseBody
+	public List<ListeCourse> getNotification(@RequestBody String id) throws Exception {
+		User user = this.userDao.findById(id).get() ; 
+		List<ListeCourse> res = new ArrayList<ListeCourse>(); 
+		for(int i=0;i<user.getCourses().size();i++) {
+			ListeCourse listeCourse = this.listeCourseDao.findById(user.getCourses().get(i)) ; 
+			res.add(listeCourse);
+		}
+		return res ; 
+	
 	}
 
 
