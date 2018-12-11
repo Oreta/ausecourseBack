@@ -53,6 +53,10 @@ public interface IOrderDAO {
 	 
 	void orderPayed(String idorder);
 	
+	void save(Order order) ; 
+	
+	List<Order> getAllOrders(); 
+	
 	 
 	 
 	

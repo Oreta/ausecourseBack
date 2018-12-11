@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +41,7 @@ public class User implements UserDetails,Serializable {
 	private boolean deliverer;
 	
 	//se rempli avec les identifiants des liste de courses dont il est notifie quand il est en mode livreur
-	private List<String> courses ; 
+	private List<String> courses = new ArrayList<String>(); 
 	
 	
 	

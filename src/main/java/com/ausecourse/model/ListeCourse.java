@@ -1,10 +1,12 @@
 package com.ausecourse.model;
 
 import java.io.Serializable;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 
@@ -20,6 +22,16 @@ public class ListeCourse implements Serializable{
 	String id;
     String mail ; // représentation Unique du client
     HashMap<String, Integer> liste;
+    
+    List<Product> listeCourse = new ArrayList<Product>(); 
+
+	public List<Product> getListeCourse() {
+		return listeCourse;
+	}
+
+	public void setListeCourse(List<Product> listeCourse) {
+		this.listeCourse = listeCourse;
+	}
 
 	public ListeCourse(String id,HashMap map) {
 		super();
@@ -69,6 +81,7 @@ public class ListeCourse implements Serializable{
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
 	public void add(String p, int quantite) {
 		liste.put(p, quantite);
 	}

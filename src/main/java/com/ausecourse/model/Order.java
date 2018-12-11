@@ -17,7 +17,8 @@ public class Order implements Serializable{
 	
 
 
-
+	public Order() {}
+	
 	public Order(String id, String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
 		super();
 		this.id = id;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ausecourse.dao.IListeCourseDAO;
 import com.ausecourse.dao.IOrderDAO;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.ListeCourse;
@@ -33,7 +34,8 @@ public class OrderController {
 	private IUserDao userDao;
 	@Autowired
 	private IOrderDAO orderDao;
-
+	@Autowired
+	private IListeCourseDAO listeCourseDao;
 //	@RequestMapping(value = "/push", method = RequestMethod.POST)
 //	public ResponseEntity push(@RequestBody Order order) throws Exception {
 //
@@ -76,7 +78,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.POST)
 	public List<Order> getAllByIdClient(@RequestBody String mail) {
 		List<Order> order = null;
 		try {
@@ -157,7 +159,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/acceptOrder", method = RequestMethod.PUT)
+	@RequestMapping(value = "/acceptOrder", method = RequestMethod.POST)
 	public ResponseEntity acceptOrder(@RequestBody String idOrder) throws Exception {
 		List<User> users = null;
 
@@ -172,7 +174,7 @@ public class OrderController {
 		return new ResponseEntity("acceptOrder Success", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/orderDone", method = RequestMethod.PUT)
+	@RequestMapping(value = "/orderDone", method = RequestMethod.POST)
 	public ResponseEntity orderDone(@RequestBody String idOrder) throws Exception {
 		List<User> users = null;
 
@@ -204,7 +206,7 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/orderPayed", method = RequestMethod.PUT)
+	@RequestMapping(value = "/orderPayed", method = RequestMethod.POST)
 	public ResponseEntity orderPayed(@RequestBody String idOrder) throws Exception {
 		List<User> users = null;
 
@@ -219,5 +221,30 @@ public class OrderController {
 		return new ResponseEntity("orderPayed Success", HttpStatus.OK);
 
 	}
+	
+	@RequestMapping(value = "/getOrderByListId", method = RequestMethod.POST)
+	public Order getOrderByListId(@RequestBody String listId) throws Exception {
+		
+		List<Order> allOrders = this.orderDao.getAllOrders() ; 
+		for(int i=0;i<allOrders.size();i++) {
+			if(allOrders.get(i).getListeCourse().getId().equals(listId)) {
+				System.out.println("get order by list id --- "  +  allOrders.get(i).getId());
+				return allOrders.get(i);
+			}
+			System.out.println("get order by list id --- hiiii " + allOrders.get(i).getListeCourse().getId() );
+		}
+		System.out.println("get order by list id --- oopss" );
+
+		return null ; 
+
+	}
+	
+	@RequestMapping(value = "/getListByOrderId", method = RequestMethod.POST)
+	public ListeCourse getListByOrderId(@RequestBody String orderId) throws Exception {
+		
+		Order order = this.orderDao.getById(orderId);
+		return order.getListeCourse() ;
+	}
+
 
 }

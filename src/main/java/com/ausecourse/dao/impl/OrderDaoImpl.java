@@ -134,6 +134,18 @@ public class OrderDaoImpl implements IOrderDAO {
 
 	}
 
+	@Override
+	public void save(Order order) {
+		this.orderRepository.save(order);
+	}
+
+	@Override
+	public List<Order> getAllOrders() {
+		List<Order> target = new ArrayList<Order>(); 
+		this.orderRepository.findAll().forEach(target::add) ;
+		return target ;
+	}
+
 
 
 }

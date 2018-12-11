@@ -1,5 +1,7 @@
 package com.ausecourse.controller;
 
+import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.ausecourse.dao.IListeCourseDAO;
 import com.ausecourse.dao.IOrderDAO;
+import com.ausecourse.dao.IProductDao;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
@@ -31,6 +34,8 @@ public class ListeCourseControlleur {
 	private IUserDao userDao;
 	@Autowired
 	private IOrderDAO orderDao;
+	@Autowired
+	private IProductDao productDao;
 	@Autowired
 	private IListeCourseDAO listeCourseDao;
 
@@ -53,34 +58,36 @@ public class ListeCourseControlleur {
 	@RequestMapping(value = "/getById", method = RequestMethod.POST)
 	public ListeCourse getById(@RequestBody String id) throws Exception {
 		ListeCourse listeCourse = null;
-
+		System.out.println("marcheee " + id);
 		try {
 			listeCourse= listeCourseDao.findById(id);
+			return listeCourse ; 
 		} catch (ExceptionInInitializerError e) {
 			System.err.println(e.getCause()+e.getMessage());
 			return null;
 
 		}
 
-		return listeCourse;
+		//return listeCourse;
 
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@RequestBody ListeCourse l) throws Exception {
-		List<ListeCourse> listeCourse = null;
+		//List<ListeCourse> listeCourse = null;
 		String rep = null;
-		System.out.println("liste de coursee farine" + l.getList().get("farine"));
+		System.out.println("liste de coursee farine" + l.getMail());
 //		HashMap<String, Integer> hm = new HashMap<>();
 //		hm.put("pain", 1);
 //		hm.put("confiture",2);
 //		 ListeCourse l = new ListeCourse(null,"mailCli",hm);
 		try {
+
 			rep = listeCourseDao.save(l);
+			//return rep ;
 		} catch (ExceptionInInitializerError e) {
 			System.err.println(e.getCause()+e.getMessage());
 			return null;
-
 		}
 
 		return rep;
@@ -122,7 +129,7 @@ public class ListeCourseControlleur {
 	}
 	
 	@RequestMapping(value = "/addToList", method = RequestMethod.POST)
-	public ResponseEntity addToList(HttpServletRequest request,
+	public ListeCourse addToList(HttpServletRequest request,
 			@RequestBody HashMap<String,String> mapper) throws Exception {
 			
 		String listId = mapper.get("listId") ;
@@ -131,10 +138,14 @@ public class ListeCourseControlleur {
 		
 		
 		ListeCourse listeCourse = this.listeCourseDao.findById(listId) ; 
-		listeCourse.getList().put(name, Integer.parseInt(qty)) ; 
+		Product product = new Product() ;
+		product.setNom(name);
+		product.setPrix(Integer.parseInt(qty));
+		this.productDao.save(product);
+		//listeCourse.setListeCourse(new ArrayList<Product>());
+		listeCourse.getListeCourse().add(product); 
 		this.listeCourseDao.save(listeCourse); 
-		return new ResponseEntity("product added !! ",HttpStatus.OK);
-
+		return listeCourse ;
 	}
 
 }

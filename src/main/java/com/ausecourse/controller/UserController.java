@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
 import com.ausecourse.dao.IListeCourseDAO;
+import com.ausecourse.dao.IOrderDAO;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.ListeCourse;
+import com.ausecourse.model.Order;
+import com.ausecourse.model.OrderState;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.Role;
 import com.ausecourse.model.security.UserRole;
+import com.ausecourse.repository.OrderRepository;
 import com.ausecourse.utility.MailConstructor;
 
 
@@ -33,7 +37,8 @@ public class UserController {
 
 	@Autowired
 	private IUserDao userDao ;
-
+	@Autowired
+	private IOrderDAO orderDao ;
 	@Autowired 
 	private IListeCourseDAO listeCourseDao ; 
 	@Autowired
@@ -51,6 +56,8 @@ public class UserController {
 		String userEmail = mapper.get("email");
 		String password = mapper.get("password") ;
 		String mode = mapper.get("mode");
+		String addressClient = mapper.get("addressLivraison");
+		String tel = mapper.get("telephone") ;
 
 
 System.out.println("controller " +" ... " + username);
@@ -64,7 +71,9 @@ System.out.println("controller " +" ... " + username);
 
 		User user = new User();
 		user.setNickname(username);
-
+		user.setTel(Integer.parseInt(tel));
+		user.setRoad(addressClient);
+		System.out.println("addresse livraison " + user.getRoad());
 		user.setEmail(userEmail);
 		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(password);
@@ -234,17 +243,20 @@ System.out.println("controller " +" ... " + user.getUsername());
 		return res; 
 	}
 	
+	
+	
 	@RequestMapping(value ="/notifyLivreur" , method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity notifyLivreur(HttpServletRequest request,
-			@RequestBody HashMap<String,String> mapper) throws Exception {
-		String livreurId = mapper.get("livreurId") ;
-		//momentanement clientId, pour l'instant le livreur choisi oui ou non de livrer en fonction du client 
-		String listeCourseId = mapper.get("listeCourseId");
-		User livreur = this.userDao.findById(livreurId).get(); 
-		livreur.getCourses().add(listeCourseId); 
-		this.userDao.save(livreur); 
-		return new ResponseEntity("notification success", HttpStatus.OK);
+			@RequestBody Order order) throws Exception {
+		System.out.println("========================================= yeeh " + order.getId() + "---- " + order.getListeCourse().getId());
+		User livreur = this.userDao.findById(order.getLivreurId()).get(); 
+		livreur.getCourses().add(order.getListeCourse().getId()) ;
+		this.userDao.save(livreur) ; 
+		order.setOrderState(OrderState.CREATE);
+		System.out.println("orderrr yeeh " + order.getId() + "---- " + order.getListeCourse().getId());
+		this.orderDao.save(order);
+ 		return new ResponseEntity("notification success", HttpStatus.OK);
 	
 	}
 	
@@ -261,6 +273,13 @@ System.out.println("controller " +" ... " + user.getUsername());
 	
 	}
 
-
+	
+	
+	@RequestMapping(value ="/getUserById" , method = RequestMethod.POST)
+	@ResponseBody
+	public User getUserById(@RequestBody String userId) throws Exception {
+		return this.userDao.findById(userId).get()  ;
+	
+	}
 
 }
