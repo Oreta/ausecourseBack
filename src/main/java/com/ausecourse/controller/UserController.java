@@ -107,8 +107,7 @@ System.out.println("controller " +" ... " + username);
 	}
 	
 	@RequestMapping(value="/newUserOk", method=RequestMethod.POST)
-	public ResponseEntity newUserOk(HttpServletRequest request,
-										@RequestBody User user) throws Exception {
+	public ResponseEntity newUserOk(@RequestBody User user) throws Exception {
 
 		
 System.out.println(user);
