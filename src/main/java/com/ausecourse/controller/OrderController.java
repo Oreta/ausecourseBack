@@ -79,16 +79,17 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/getAllByIdClient", method = RequestMethod.POST)
-	public List<Order> getAllByIdClient(@RequestBody String mail) {
-		List<Order> order = null;
+	public List<Order> getAllByIdClient(@RequestBody String id) {
+		List<Order> orders = null;
 		try {
-			order = orderDao.getAllOrderByIdClient(mail);
+			
+			orders = orderDao.getAllOrderByIdClient(id);
+			return orders ;
 		} catch (Exception e) {
 			System.err.println(e.getStackTrace());
 			return null;
 		}
 
-		return order;
 
 	}
 
@@ -129,9 +130,11 @@ public class OrderController {
 	public String createOrder(@RequestBody ListeCourse l) throws Exception {
 		String idOrder = null;
 		System.out.println(l);
+		User user = this.userDao.findByEmail(l.getMail()) ;
+		System.out.println("user address here haha " + user.getEmail() );
 		
 		try {
-			idOrder = orderDao.createOrder(l.getMail(),l);
+			idOrder = orderDao.createOrder(l.getMail(), user.getNumeroRoad()+" " + user.getRoad() + ", " + user.getCity(), l);
 		} catch (Exception e) {
 			System.err.println(e.getStackTrace());
 

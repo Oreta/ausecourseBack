@@ -54,10 +54,10 @@ public class OrderDaoImpl implements IOrderDAO {
 	}
 	
 	@Override
-	public String createOrder(String idClient,ListeCourse listeCourse) {
+	public String createOrder(String idClient,String add ,ListeCourse listeCourse) {
 		// auto increment, see if better method
 		
-		return orderRepository.save(new Order(null,idClient, null, listeCourse, OrderState.CREATE)).getId();
+		return orderRepository.save(new Order(null,add,idClient,null, listeCourse, OrderState.CREATE)).getId();
 		
 	}
 
@@ -93,7 +93,8 @@ public class OrderDaoImpl implements IOrderDAO {
 	ArrayList<Order> listOrder	=(ArrayList<Order>) orderRepository.findAll();
 	ArrayList<Order>  listeReturn= new ArrayList<Order>();
 	for (Order order : listOrder) {
-		if(order.getClientID().equals(idClient)) { // to change by get id after clean 
+		
+		if(order.getClientID().equals(idClient)) { 
 			listeReturn.add(order);
 		}
 		

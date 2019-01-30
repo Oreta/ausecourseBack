@@ -72,7 +72,7 @@ System.out.println("controller " +" ... " + username);
 		User user = new User();
 		user.setNickname(username);
 		user.setTel(Integer.parseInt(tel));
-		user.setRoad(addressClient);
+		user.setCity(addressClient);
 		System.out.println("addresse livraison " + user.getRoad());
 		user.setEmail(userEmail);
 		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
@@ -249,13 +249,12 @@ System.out.println("controller " +" ... " + user.getUsername());
 	@ResponseBody
 	public ResponseEntity notifyLivreur(HttpServletRequest request,
 			@RequestBody Order order) throws Exception {
-		System.out.println("========================================= yeeh " + order.getId() + "---- " + order.getListeCourse().getId());
 		User livreur = this.userDao.findById(order.getLivreurId()).get(); 
 		livreur.getCourses().add(order.getListeCourse().getId()) ;
 		this.userDao.save(livreur) ; 
 		order.setOrderState(OrderState.CREATE);
-		System.out.println("orderrr yeeh " + order.getId() + "---- " + order.getListeCourse().getId());
 		this.orderDao.save(order);
+		System.out.println("notify livreur order address " + order.getAddress() + order.getClientID() );
  		return new ResponseEntity("notification success", HttpStatus.OK);
 	
 	}

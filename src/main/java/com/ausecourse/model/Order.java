@@ -10,6 +10,7 @@ public class Order implements Serializable{
 	@Id
 	String id;
 	String clientID;
+	String address ; 
 	String livreurId;
 	ListeCourse listeCourse;
 
@@ -19,13 +20,14 @@ public class Order implements Serializable{
 
 	public Order() {}
 	
-	public Order(String id, String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
+	public Order(String id, String add , String clientID, String livreurId, ListeCourse listeCourse, OrderState orderState) {
 		super();
 		this.id = id;
 		this.clientID = clientID;
 		this.livreurId = livreurId;
 		this.listeCourse = listeCourse;
 		this.orderState = orderState;
+		this.address = add ;
 	}
 	public ListeCourse getListeCourse() {
 		return listeCourse;
@@ -57,6 +59,16 @@ public class Order implements Serializable{
 	}
 	public void setOrderState(OrderState orderState) {
 		this.orderState = orderState;
+	}
+	
+	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	@Override

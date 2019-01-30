@@ -22,6 +22,7 @@ public class ListeCourse implements Serializable{
 	String id;
     String mail ; // représentation Unique du client
     HashMap<String, Integer> liste;
+    String address ; 
     
     List<Product> listeCourse = new ArrayList<Product>(); 
 
@@ -86,6 +87,16 @@ public class ListeCourse implements Serializable{
 		liste.put(p, quantite);
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	
+	
 	
 	
 }
