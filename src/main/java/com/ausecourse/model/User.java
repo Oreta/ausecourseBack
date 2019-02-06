@@ -40,11 +40,25 @@ public class User implements UserDetails,Serializable {
 	private boolean client;
 	private boolean deliverer;
 	
+	private List<Review> reviews = new ArrayList<Review>(); 
+	
+	private double stars = 0.0 ; 
+	
+	
 	//se rempli avec les identifiants des liste de courses dont il est notifie quand il est en mode livreur
 	private List<String> courses = new ArrayList<String>(); 
 	
+	private List<Order> ordersToHandle = new ArrayList<Order>(); //en mode livreur
 	
 	
+	public List<Order> getOrdersToHandle() {
+		return ordersToHandle;
+	}
+
+	public void setOrdersToHandle(List<Order> ordersToHandle) {
+		this.ordersToHandle = ordersToHandle;
+	}
+
 	public List<String> getCourses() {
 		return courses;
 	}
@@ -171,6 +185,34 @@ public class User implements UserDetails,Serializable {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
+	
+	
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+	
+	
+
+	public double getStars() {
+		return stars;
+	}
+
+	public void setStars(double stars) {
+		this.stars = stars;
+	}
+	
+	public double updateStars() {
+		double res = this.stars; 
+		for(int i=0;i<this.reviews.size();i++)
+			res = res + this.reviews.get(i).getStars(); 
+		
+		return res/this.reviews.size();
+	} 
 
 	public User(String id, String name, String nickname, String email, int tel, int numeroRoad, String road, String city,
 			String country) {

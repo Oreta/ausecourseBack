@@ -18,10 +18,12 @@ import com.ausecourse.config.SecurityConfig;
 import com.ausecourse.config.SecurityUtility;
 import com.ausecourse.dao.IListeCourseDAO;
 import com.ausecourse.dao.IOrderDAO;
+import com.ausecourse.dao.IReviewDAO;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
 import com.ausecourse.model.OrderState;
+import com.ausecourse.model.Review;
 import com.ausecourse.model.User;
 import com.ausecourse.model.security.Role;
 import com.ausecourse.model.security.UserRole;
@@ -43,6 +45,8 @@ public class UserController {
 	private IListeCourseDAO listeCourseDao ; 
 	@Autowired
 	private MailConstructor mailConstructor ;
+	@Autowired
+	private IReviewDAO reviewDao;
 
 	//@Autowired//import jdk.internal.jline.internal.Log;
 	//private JavaMailSender mailSender ;
@@ -60,7 +64,6 @@ public class UserController {
 		String tel = mapper.get("telephone") ;
 
 
-System.out.println("controller " +" ... " + username);
 		if(userDao.findByUsername(username) != null){
 			return new ResponseEntity("usernameExists" , HttpStatus.BAD_REQUEST);
 		}
@@ -73,7 +76,6 @@ System.out.println("controller " +" ... " + username);
 		user.setNickname(username);
 		user.setTel(Integer.parseInt(tel));
 		user.setCity(addressClient);
-		System.out.println("addresse livraison " + user.getRoad());
 		user.setEmail(userEmail);
 		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(password);
@@ -83,7 +85,6 @@ System.out.println("controller " +" ... " + username);
 			user.setClient(true);
 	
 
-		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
 
 		Role role = new Role();
 		role.setRoleId("1");
@@ -130,9 +131,7 @@ System.out.println("controller " +" ... " + username);
 										@RequestBody User user) throws Exception {
 
 		
-System.out.println(user);
 
-System.out.println("controller " +" ... " + user.getUsername());
 		if(userDao.findByUsername(user.getUsername()) != null){
 			return new ResponseEntity("usernameExists" , HttpStatus.BAD_REQUEST);
 		}
@@ -148,7 +147,6 @@ System.out.println("controller " +" ... " + user.getUsername());
 		//String encryptedPassword = SecurityConfig.passwordEncoder().encode(password) ;
 		user.setPassword(user.getPassword());
 
-		System.out.println("credential received username : " + user.getUsername() + " and password : " + user.getPassword());
 
 		Role role = new Role();
 		role.setRoleId("1");
@@ -216,13 +214,10 @@ System.out.println("controller " +" ... " + user.getUsername());
 	public User getCurrentUser(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		User user = new User();
-		System.out.println("test " + (principal == null));
 		if(null != principal) {
-			System.out.println("principal nullllll ");
 			user = this.userDao.findByUsername(principal.getName()) ;
 		}
 		
-		System.out.println("livrerrrrr " + user.isDeliverer());
 
 		return user ;
 
@@ -250,15 +245,20 @@ System.out.println("controller " +" ... " + user.getUsername());
 	public ResponseEntity notifyLivreur(HttpServletRequest request,
 			@RequestBody Order order) throws Exception {
 		User livreur = this.userDao.findById(order.getLivreurId()).get(); 
-		livreur.getCourses().add(order.getListeCourse().getId()) ;
-		this.userDao.save(livreur) ; 
+		//livreur.getCourses().add(order.getListeCourse().getId()) ;
+		//this.userDao.save(livreur) ; 
 		order.setOrderState(OrderState.CREATE);
 		this.orderDao.save(order);
-		System.out.println("notify livreur order address " + order.getAddress() + order.getClientID() );
+		System.out.println("after save order : " + order.getAddress());
+		//modifications
+		livreur.getOrdersToHandle().add(order);
+		System.out.println("before save livreur hehe");
+		this.userDao.save(livreur) ; 
+		System.out.println("after save livreur hehe");
  		return new ResponseEntity("notification success", HttpStatus.OK);
 	
 	}
-	
+/*	
 	@RequestMapping(value ="/getNotification" , method = RequestMethod.POST)
 	@ResponseBody
 	public List<ListeCourse> getNotification(@RequestBody String id) throws Exception {
@@ -271,7 +271,15 @@ System.out.println("controller " +" ... " + user.getUsername());
 		return res ; 
 	
 	}
-
+*/
+	
+	@RequestMapping(value ="/getNotification" , method = RequestMethod.POST)
+	@ResponseBody
+	public List<Order> getNotification(@RequestBody String id) throws Exception {
+		User user = this.userDao.findById(id).get() ; 
+		return user.getOrdersToHandle();
+	
+	}
 	
 	
 	@RequestMapping(value ="/getUserById" , method = RequestMethod.POST)
@@ -279,6 +287,36 @@ System.out.println("controller " +" ... " + user.getUsername());
 	public User getUserById(@RequestBody String userId) throws Exception {
 		return this.userDao.findById(userId).get()  ;
 	
+	}
+	
+	@RequestMapping(value ="/makeReview" , method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity makeReview(HttpServletRequest request,
+			@RequestBody HashMap<String,String> mapper) throws Exception {
+		String livreurId = mapper.get("livreurId") ; 
+		String nbStars = mapper.get("nbStars"); 
+		User livreur = this.userDao.findById(livreurId).get() ; 
+		Review review = new Review(); 
+		review.setStars(Integer.parseInt(nbStars));
+		review.setUser(livreur);
+		this.reviewDao.save(review); 
+		List<Review> allreviews = this.reviewDao.findAll(); 
+		List<Review> livreurReviews = new ArrayList<Review>();
+		for (int i=0;i<allreviews.size();i++) {
+			if(allreviews.get(i).getUser().getId().equals(livreurId))
+				livreurReviews.add(allreviews.get(i)); 
+		}
+		//update nb stars
+		double res = livreur.getStars(); 
+		for(int i=0;i<livreurReviews.size();i++)
+			res = res + livreurReviews.get(i).getStars();
+		livreur.setStars(res/livreurReviews.size());
+		
+		//save livreur
+		this.userDao.save(livreur);
+		System.out.println("after save livreur : " + this.userDao.findById(livreurId).get().getStars());
+		return new ResponseEntity("review Added", HttpStatus.OK);
+
 	}
 
 }

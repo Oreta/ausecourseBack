@@ -114,6 +114,14 @@ public class OrderDaoImpl implements IOrderDAO {
 	@Override
 	public void acceptOrder(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
+		User livreur = this.userDAO.findById(order.getLivreurId()).get(); 
+		for(int i=0;i<livreur.getOrdersToHandle().size();i++) {
+			if(livreur.getOrdersToHandle().get(i).getId().equals(order.getId())) {
+				livreur.getOrdersToHandle().get(i).setOrderState(OrderState.INPROGRESS);
+				this.userDAO.save(livreur);
+				break; 
+			}
+		}
 		order.setOrderState(OrderState.INPROGRESS);
 		orderRepository.save(order);
 
@@ -122,6 +130,14 @@ public class OrderDaoImpl implements IOrderDAO {
 	@Override
 	public void orderDone(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
+		User livreur = this.userDAO.findById(order.getLivreurId()).get(); 
+		for(int i=0;i<livreur.getOrdersToHandle().size();i++) {
+			if(livreur.getOrdersToHandle().get(i).getId().equals(order.getId())) {
+				livreur.getOrdersToHandle().get(i).setOrderState(OrderState.DELIVRED);
+				this.userDAO.save(livreur);
+				break; 
+			}
+		}
 		order.setOrderState(OrderState.DELIVRED);
 		orderRepository.save(order);
 
@@ -130,6 +146,14 @@ public class OrderDaoImpl implements IOrderDAO {
 	@Override
 	public void orderPayed(String idOrder) {
 		Order order = orderRepository.findById(idOrder).get();
+		User livreur = this.userDAO.findById(order.getLivreurId()).get(); 
+		for(int i=0;i<livreur.getOrdersToHandle().size();i++) {
+			if(livreur.getOrdersToHandle().get(i).getId().equals(order.getId())) {
+				livreur.getOrdersToHandle().get(i).setOrderState(OrderState.PAYED);
+				this.userDAO.save(livreur);
+				break; 
+			}
+		}
 		order.setOrderState(OrderState.PAYED);
 		orderRepository.save(order);
 

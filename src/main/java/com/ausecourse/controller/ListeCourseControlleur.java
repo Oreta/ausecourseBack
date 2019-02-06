@@ -58,7 +58,7 @@ public class ListeCourseControlleur {
 	@RequestMapping(value = "/getById", method = RequestMethod.POST)
 	public ListeCourse getById(@RequestBody String id) throws Exception {
 		ListeCourse listeCourse = null;
-		System.out.println("marcheee " + id);
+	
 		try {
 			listeCourse= listeCourseDao.findById(id);
 			return listeCourse ; 
@@ -76,7 +76,6 @@ public class ListeCourseControlleur {
 	public String save(@RequestBody ListeCourse l) throws Exception {
 		//List<ListeCourse> listeCourse = null;
 		String rep = null;
-		System.out.println("liste de coursee farine" + l.getMail());
 //		HashMap<String, Integer> hm = new HashMap<>();
 //		hm.put("pain", 1);
 //		hm.put("confiture",2);

@@ -28,22 +28,18 @@ public class LoginResource {
 	
 	@RequestMapping("/token")
 	public Map<String,String> token(HttpSession session, HttpServletRequest request){
-		System.out.println(request.getRemoteHost());
-		
+
 		String remoteHost = request.getRemoteHost();
 		int portNumber = request.getRemotePort() ; 
 		
-		System.out.println(remoteHost+":"+portNumber);
-		System.out.println(request.getRemoteAddr());
-		
-		System.out.println("iciiiii token");
+
 		
 		return Collections.singletonMap("token", session.getId());
 	}
 	
 	@RequestMapping("/checkSession")
 	public ResponseEntity checkSession(){
-		System.out.println("checksession marcheee ");
+
 		return new ResponseEntity("Session Active!" , HttpStatus.OK);
 	}
 	

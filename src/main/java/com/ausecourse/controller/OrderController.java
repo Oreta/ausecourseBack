@@ -1,5 +1,7 @@
 package com.ausecourse.controller;
 
+
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import com.ausecourse.dao.IOrderDAO;
 import com.ausecourse.dao.IUserDao;
 import com.ausecourse.model.ListeCourse;
 import com.ausecourse.model.Order;
+import com.ausecourse.model.OrderState;
 import com.ausecourse.model.User;
 /* dans un cas classique, ordre des principaux  ctrl a appelée:
  * createOrder
@@ -129,9 +132,8 @@ public class OrderController {
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
 	public String createOrder(@RequestBody ListeCourse l) throws Exception {
 		String idOrder = null;
-		System.out.println(l);
+		
 		User user = this.userDao.findByEmail(l.getMail()) ;
-		System.out.println("user address here haha " + user.getEmail() );
 		
 		try {
 			idOrder = orderDao.createOrder(l.getMail(), user.getNumeroRoad()+" " + user.getRoad() + ", " + user.getCity(), l);
@@ -231,12 +233,9 @@ public class OrderController {
 		List<Order> allOrders = this.orderDao.getAllOrders() ; 
 		for(int i=0;i<allOrders.size();i++) {
 			if(allOrders.get(i).getListeCourse().getId().equals(listId)) {
-				System.out.println("get order by list id --- "  +  allOrders.get(i).getId());
 				return allOrders.get(i);
 			}
-			System.out.println("get order by list id --- hiiii " + allOrders.get(i).getListeCourse().getId() );
 		}
-		System.out.println("get order by list id --- oopss" );
 
 		return null ; 
 
@@ -249,5 +248,21 @@ public class OrderController {
 		return order.getListeCourse() ;
 	}
 
+	@RequestMapping(value = "/orderInProgress", method = RequestMethod.POST)
+	public ResponseEntity orderInProgress(@RequestBody String orderId) throws Exception {
+		
+		Order order = this.orderDao.getById(orderId);
+		User livreur = this.userDao.findById(order.getLivreurId()).get(); 
+		for(int i=0;i<livreur.getOrdersToHandle().size();i++) {
+			if(livreur.getOrdersToHandle().get(i).getId().equals(order.getId())) {
+				livreur.getOrdersToHandle().get(i).setOrderState(OrderState.INPROGRESS);
+				this.userDao.save(livreur);
+				break; 
+			}
+		}
+		order.setOrderState(OrderState.INPROGRESS);
+		this.orderDao.save(order);
+		return new ResponseEntity("orderInProgress Success", HttpStatus.OK);
+	}
 
 }
