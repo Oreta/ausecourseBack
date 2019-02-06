@@ -17,9 +17,9 @@ import org.springframework.data.redis.core.RedisTemplate;
    JedisConnectionFactory jedisConnectionFactory() {
        JedisConnectionFactory jedisConFactory
            = new JedisConnectionFactory();
-       jedisConFactory.setHostName("redis-17866.c1.eu-west-1-3.ec2.cloud.redislabs.com");
-       jedisConFactory.setPassword("123456a");
-       jedisConFactory.setPort(17866);
+       jedisConFactory.setHostName("redis-10649.c1.eu-west-1-3.ec2.cloud.redislabs.com");
+       jedisConFactory.setPassword("lcUhgaQbfoCKXtAiZSJXq4ZFxtx0XePm");
+       jedisConFactory.setPort(10649);
        return jedisConFactory;
    }
 
