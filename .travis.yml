@@ -2,21 +2,19 @@ sudo: required
 language: java
 jdk: oraclejdk8
 services:
-  - docker
-
+- docker
 script:
-  - ./mvnw clean install -B
-
+- "./mvnw clean install -B"
 after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - export TAG=if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;fi
-  - export IMAGE_NAME=$DOCKER_USER/ausecourseback
-  - echo $IMAGE_NAME:$COMMIT
-  - docker build -t $IMAGE_NAME:$TRAVIS_COMMIT .
-  - docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:$TAG
-  - docker push $IMAGE_NAME
-
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- export TAG=if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;fi
+- export IMAGE_NAME=$DOCKER_USER/ausecourseback
+- echo $IMAGE_NAME:$COMMIT
+- docker build -t $IMAGE_NAME:$TRAVIS_COMMIT .
+- docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:$TAG
+- docker push $IMAGE_NAME
 deploy:
   provider: heroku
-api_key:
-  secure: 64ad335d-ff42-44ce-9c7e-67bc17c61ebe
+  api_key:
+    secure: zLZ/vQazKLmTiT2HaDSoWwd2YJRD/ZYN6rVsH7L5KvXktuDb803gDLuk8UgmhqkpMvKi0qoW4XOqnfvTC2M98AuOOagvNyRrCAyZZtdr99SiVTOttpVhXFXYP8nr5GlmkSPcmoUnkacI5pG8mOj/ekv/EFmpB1SCNB1zvVr4aFB1gz5cWHoNyD5pmunUfj0Uib+83lqyza1eV/eKuFaid5euHrqGQJDvkGoU5vp+K3fPcNvyMZY8W82Nmap99kTjfxo/65njvYj9OHYQROE12x6ySngVdKgpnhuNK09lhp9m6ng2ZpaWLSxk1WICB3wmYaJJ4283fF2C4pUrUckz2BAT0FfRHnteMZbHSe/ia1NGi3getzLwuiVUDC59/xz0Z2JCjIepEZZmQmW6g6WeGhubUjWftCsX1VG/sPx+zz07FpqalGnaOdzkbrcDqaFijzGyBWgWhbVMrxZ+o2Ijjnv5rB65uRN68enOQJS+2dmTNfA/XZ2RlikLN93JigKxxRizVFupPuEJ0f7fB0t0vgK7yejUJ6vohdRQxJCaCS+plsDKf/bcSfWCONv+z+OH+GoESn80/JNpqCqBpzYsfFaULRo8UymHmp0xsG+Ki3MGuRJWP2D3aQI3RkJb8SkZlocAVYKGcBIeNs/HOtIZKbvG0sJuAEui6o3kauQhWYk=
+  app: ausecourseback
