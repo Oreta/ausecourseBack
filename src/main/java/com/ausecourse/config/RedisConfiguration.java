@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-@Configuration @PropertySource("application.properties") public class RedisConfiguration {
+@Configuration public class RedisConfiguration {
 
    public static String SEPARATOR = ":";
 
@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
        JedisConnectionFactory jedisConFactory
            = new JedisConnectionFactory();
        jedisConFactory.setHostName("redis-10649.c1.eu-west-1-3.ec2.cloud.redislabs.com");
-       jedisConFactory.setPassword("lcUhgaQbfoCKXtAiZSJXq4ZFxtx0XePm");
+       jedisConFactory.setPassword("123456a*");
        jedisConFactory.setPort(10649);
        return jedisConFactory;
    }
